@@ -29,7 +29,7 @@ async function index(req, res) {
   });
   
   //return res.render('index', {errors, events, registrations, title, user,  admin: false, validated });
-  return res.json(output); 
+  return res.json(events); 
 }
 
 /**     
