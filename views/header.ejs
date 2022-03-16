@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="is">
+  <head>
+    <meta charset="utf-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <main>
+  <header>
+    <section>
+      <h1><%= title %></h1>
+       <% if(validated && user.admin == true) { %>
+          <div class="stjornandi"><a href="/admin/">Stjórnandi</a></div> 
+          <div class="notandi"><a href="/notandi/">Lista af notenda</a></div> 
+          <div class="utskra"><a href="/admin/logout">Útskrá</a></div>
+        <% } else if( validated && user.admin == false) { %> 
+          <div class="stjornandi"><%= user.nameuser %></div> 
+          <div class="utskra"><a href="/admin/logout">Útskrá</a></div>
+        <% } else { %>
+        <!-- <div class="nyskra"><a href="/notandi/register">Nýskrá</a></div>-->
+        <div class="innskra"><a href="/admin/login">Innskrá</a></div>
+       <% } %>
+  </section>
+  </header> 

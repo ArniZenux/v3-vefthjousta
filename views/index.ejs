@@ -1,0 +1,20 @@
+<%- include('header') -%>
+<section class="registrations">
+
+<% if( !validated )  { %>
+ <%- include('listVidburdur') -%>
+ <%- include('nyskra') -%>
+<% } %>
+
+<% if( validated && user.admin ) { %>
+  <%- include('openlistVidburdur') -%>
+  <%- include('adminVidburdur') -%>
+<% } %>
+
+<% if( validated && user.admin==false ) { %>
+  <%- include('openlistVidburdur') -%>  
+  <%- include('user_vidburdur') -%>
+<% } %>
+
+</section>
+<%- include('footer') -%>
