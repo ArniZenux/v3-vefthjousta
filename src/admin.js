@@ -1,7 +1,7 @@
 import express from 'express';
 import xss from 'xss';
 import { body } from 'express-validator';
-import { list, insert, update } from './db_psql.js';
+import { listApp, insertApp, updateApp } from './db_psql.js';
 import passport, { ensureLoggedIn } from './login.js';
 import { vidburdCheck, updateCheck } from './check.js';
 import { catchErrors } from './utils.js';
@@ -37,7 +37,7 @@ async function index(req, res) {
       vidburdur 
     `;
   
-  const rows = await list(sqlVidburdur);
+  const rows = await listApp(sqlVidburdur);
   const validated = req.isAuthenticated();
   const errors = [];
   const formData = [];
@@ -128,7 +128,7 @@ async function skraVidburdur(req, res){
   `;
 
   try {
-    success = await insert(sqlVidburdur, info);
+    success = await insertApp(sqlVidburdur, info);
   }
   catch(e){
     console.error(e); 
@@ -161,7 +161,7 @@ async function adminSlugPost(req, res){
   `;
   
   try {
-    success = await update(sql, info);
+    success = await updateApp(sql, info);
   }
   catch(e){
     console.error(e);

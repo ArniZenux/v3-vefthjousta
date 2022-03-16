@@ -1,7 +1,7 @@
 import express from 'express';
 import { ensureLoggedIn } from './login.js';
 
-import { list, insert } from './db_psql.js';
+import { listApp, insertApp } from './db.js';
 import { catchErrors } from './utils.js';
 
 export const router = express.Router();
@@ -17,7 +17,7 @@ async function index(req, res) {
       vidburdur
   `;
   
-  const events = await list(sqlVidburdur);
+  const events = await listApp(sqlVidburdur);
   const registrations = [];
   const user = { req };
   const errors = [];
@@ -61,23 +61,23 @@ async function getVidburdur(req, res){
   const formData = [];
 
   try {
-    const rows = await list(sql, [id]); 
-    const rowsUser = await list(sqlUser, [id]); 
+    const events = await listApp(sql, [id]); 
+    const rowsUser = await listApp(sqlUser, [id]); 
     
     /*res.render('vidburd', 
       { user, 
         formData, 
         errors, 
         title, 
-        events : rows, 
-        users : rowsUser, 
+        events, 
+        rowsuser, 
         admin : true, 
         validated 
     });
     */
     const output = JSON.stringify({
       title,
-      rows,
+      events,
       validated
     });
     return res.send(output); 
@@ -106,7 +106,7 @@ async function userPostNewEvent(req, res){
   `;
 
   try {
-    success = await insert(sqlVidburdur, info);
+    success = await insertApp(sqlVidburdur, info);
   }
   catch(e){
     console.error(e); 

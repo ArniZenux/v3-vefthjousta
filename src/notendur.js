@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 
 import { body } from 'express-validator';
-import { list, insert } from './db_psql.js';
+import { listApp, insertApp } from './db_psql.js';
 import passport, { ensureLoggedIn } from './login.js';
 import { catchErrors } from './utils.js';
 
@@ -41,7 +41,7 @@ async function listNotenda(req, res){
     `;
 
   const validated = req.isAuthenticated();
-  const rows = await list(sql);
+  const rows = await listApp(sql);
   const { user } = req;
   return res.render('notendur', 
     { events: rows, 
@@ -67,7 +67,7 @@ async function einnNotandi(req, res){
 
   const validated = req.isAuthenticated();
   const { user } = req;
-  const rows = await list(sql, id);
+  const rows = await listApp(sql, id);
   return res.render('notendur', 
     { events: rows, 
       title, 
@@ -95,7 +95,7 @@ async function nySkra(req, res) {
   `;
   
   try {
-    success = await insert(sqlUser, info);
+    success = await insertApp(sqlUser, info);
   }
   catch(e){
     console.error(e); 
