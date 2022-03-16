@@ -17,18 +17,18 @@ async function index(req, res) {
       vidburdur
   `;
   
-  const rows = await list(sqlVidburdur);
+  const events = await list(sqlVidburdur);
   const registrations = [];
   const user = { req };
   const errors = [];
   
   const output = JSON.stringify({
     title,
-    rows,
+    events,
     validated
   });
   
-  //return res.render('index', {errors, events: rows, registrations, title, user,  admin: false, validated });
+  //return res.render('index', {errors, events, registrations, title, user,  admin: false, validated });
   return res.send(output); 
 }
 

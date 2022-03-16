@@ -77,16 +77,18 @@ app.locals.formatDate = (str) => {
   return date;
 };
 
-//app.use('/admin', adminRoute);
-//app.use('/notandi', notandaRoute); 
-//app.use('/', eventRouter);
-app.get("/", (req, res) => {
+app.use('/admin', adminRoute);
+app.use('/notandi', notandaRoute); 
+app.use('/', eventRouter);
+
+/*app.get("/", (req, res) => {
   res.json( { message: "Hello Vidbudur" });
 });
 
 app.get("/api", (req, res) => {
   res.json( { message: "Hello Api" });
 });
+*/
 
 /**
  * Middleware sem sér um 404 villur.
