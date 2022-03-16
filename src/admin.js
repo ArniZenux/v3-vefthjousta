@@ -1,7 +1,7 @@
 import express from 'express';
 import xss from 'xss';
 import { body } from 'express-validator';
-import { listApp, insertApp, updateApp } from './db_psql.js';
+import { listApp, insertApp, updateApp } from './db.js';
 import passport, { ensureLoggedIn } from './login.js';
 import { vidburdCheck, updateCheck } from './check.js';
 import { catchErrors } from './utils.js';

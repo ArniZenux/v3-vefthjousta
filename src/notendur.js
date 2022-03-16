@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 
 import { body } from 'express-validator';
-import { listApp, insertApp } from './db_psql.js';
+import { listApp, insertApp } from './db.js';
 import passport, { ensureLoggedIn } from './login.js';
 import { catchErrors } from './utils.js';
 
