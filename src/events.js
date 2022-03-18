@@ -35,7 +35,7 @@ async function index(req, res) {
 /**     
  *  GET - Ná ein viðburð undir admin og birta uppfæra-siðu
  */
-/*
+
 async function getVidburdur(req, res){
   const { id } = req.params;
   const title = 'Viðburðasíðan';
@@ -80,17 +80,15 @@ async function getVidburdur(req, res){
       title,
       events,
       validated
-    });
+    });*/
+    
     return res.json(events); 
-
 
   }
   catch(e){
     console.error(e); 
   }
 }
-/*
-
 
 /**
  *  POST - notandi skráð viðburði. 
@@ -123,7 +121,7 @@ async function userPostNewEvent(req, res){
 }
 
 router.get('/', catchErrors(index));
-//router.get('/:id', catchErrors(getVidburdur));
+router.get('/:id', catchErrors(getVidburdur));
 //router.patch('/:id', getVidburdur);
 //router.delete(d)
 //router.post('/', catchErrors(userPostNewEvent));
