@@ -1,5 +1,5 @@
 import express from 'express';
-import { ensureLoggedIn } from './login.js';
+//import { ensureLoggedIn } from './login.js';
 
 import { listApp, insertApp } from './db.js';
 import { catchErrors } from './utils.js';
@@ -7,7 +7,7 @@ import { catchErrors } from './utils.js';
 export const router = express.Router();
 
 async function index(req, res) {
-  const validated = req.isAuthenticated();
+  //const validated = req.isAuthenticated();
   const title = 'Viðburðasíðan';
 
   const sqlVidburdur = `
@@ -22,11 +22,11 @@ async function index(req, res) {
   const user = { req };
   const errors = [];
   
-  const output = JSON.stringify({
+  /*const output = JSON.stringify({
     title,
     events,
     validated
-  });
+  });*/
   
   //return res.render('index', {errors, events, registrations, title, user,  admin: false, validated });
   return res.json(events); 
@@ -35,10 +35,11 @@ async function index(req, res) {
 /**     
  *  GET - Ná ein viðburð undir admin og birta uppfæra-siðu
  */
+/*
 async function getVidburdur(req, res){
   const { id } = req.params;
   const title = 'Viðburðasíðan';
-  const validated = req.isAuthenticated();
+  //const validated = req.isAuthenticated();
   const user = { req };
 
   const sql = `
@@ -74,13 +75,13 @@ async function getVidburdur(req, res){
         admin : true, 
         validated 
     });
-    */
+    
     const output = JSON.stringify({
       title,
       events,
       validated
     });
-    return res.send(output); 
+    return res.json(events); 
 
 
   }
@@ -88,6 +89,8 @@ async function getVidburdur(req, res){
     console.error(e); 
   }
 }
+/*
+
 
 /**
  *  POST - notandi skráð viðburði. 
@@ -119,9 +122,9 @@ async function userPostNewEvent(req, res){
   return res.render('error', {validated,  title: 'Gat ekki skráð' });
 }
 
-router.get('/', index);
-router.get('/:id', ensureLoggedIn,  getVidburdur);
+router.get('/', catchErrors(index));
+//router.get('/:id', catchErrors(getVidburdur));
 //router.patch('/:id', getVidburdur);
 //router.delete(d)
-router.post('/', catchErrors(userPostNewEvent));
+//router.post('/', catchErrors(userPostNewEvent));
 //router.post('/:id/register', catchErrors(userPostEvent));

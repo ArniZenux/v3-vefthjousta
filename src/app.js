@@ -8,8 +8,9 @@ import { format } from 'date-fns';
 
 import passport from './login.js';
 import { router as eventRouter } from './events.js';
-import { router as adminRoute } from './admin.js';
-import { router as notandaRoute } from './notendur.js';
+import { cors } from './cors.js';
+//import { router as adminRoute } from './admin.js';
+//import { router as notandaRoute } from './notendur.js';
 
 dotenv.config();
 
@@ -19,11 +20,11 @@ export function catchErrors(fn) {
 
 const {
   PORT: port = 8080,
-  SESSION_SECRET: sessionSecret,
+  //SESSION_SECRET: sessionSecret,
   DATABASE_URL: connectionString,
 } = process.env;
 
-if (!connectionString || !sessionSecret) {
+if (!connectionString )  {
   console.error('Vantar gögn í env');
   process.exit(1);
 }
@@ -31,6 +32,8 @@ if (!connectionString || !sessionSecret) {
 const app = express();
 
 // Sér um að req.body innihaldi gögn úr formi
+app.use(cors);
+
 app.use(express.urlencoded({ extended: true }));
 
 const path = dirname(fileURLToPath(import.meta.url));
@@ -40,15 +43,15 @@ app.use(express.static(join(path, '../public')));
 app.set('views', join(path, '../views'));
 app.set('view engine', 'ejs');
 
-app.use(session({
+/*app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
   maxAge: 20 * 1000, // 20 sek
-}));
+}));*/
 
-app.use(passport.initialize());
-app.use(passport.session());
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 /**
  * Hjálparfall til að athuga hvort reitur sé gildur eða ekki.
@@ -77,8 +80,8 @@ app.locals.formatDate = (str) => {
   return date;
 };
 
-app.use('/admin', adminRoute);
-app.use('/notandi', notandaRoute); 
+//app.use('/admin', adminRoute);
+//app.use('/notandi', notandaRoute); 
 app.use('/', eventRouter);
 
 /*app.get("/", (req, res) => {
@@ -90,36 +93,21 @@ app.get("/api", (req, res) => {
 });
 */
 
-/**
- * Middleware sem sér um 404 villur.
- *
- * @param {object} req Request hlutur
- * @param {object} res Response hlutur
- * @param {function} next Næsta middleware
- */
 // eslint-disable-next-line no-unused-vars
 function notFoundHandler(req, res, next) {
-  const validated = req.isAuthenticated();
-  const { user } = req;
+  //const validated = req.isAuthenticated();
+  //const { user } = req;
   const title = 'Síða fannst ekki';
-  res.status(404).render('error', { title, validated, user });
+  res.status(404).jsonr({ error: title });
 }
 
-/**
- * Middleware sem sér um villumeðhöndlun.
- *
- * @param {object} err Villa sem kom upp
- * @param {object} req Request hlutur
- * @param {object} res Response hlutur
- * @param {function} next Næsta middleware
- */
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
-  const validated = req.isAuthenticated();
-  const { user } = req;
+//  const validated = req.isAuthenticated();
+  //const { user } = req;
   console.error(err);
   const title = 'Villa kom upp';
-  res.status(500).render('error', { title, validated, user });
+  res.status(500).json( { error : title });
 }
 
 app.use(notFoundHandler);
