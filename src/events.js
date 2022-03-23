@@ -50,12 +50,13 @@ async function getVidburdur(req, res){
     `;
 
   const sqlUser = `
-    SELECT * FROM 
+    SELECT  namevidburdur, description, nameskra, comment 
+    FROM 
       vidburdur, skraning 
     WHERE 
       vidburdur.id=skraning.eventid 
     AND 
-      vidburdur.slug = $1;
+      vidburdur.id = $1
     `;
 
   const errors = [];
@@ -82,7 +83,7 @@ async function getVidburdur(req, res){
       validated
     });*/
     
-    return res.json(events); 
+    return res.json(rowsUser); 
 
   }
   catch(e){
@@ -120,8 +121,8 @@ async function userPostNewEvent(req, res){
   return res.render('error', {validated,  title: 'Gat ekki skráð' });
 }
 
-router.get('/', catchErrors(index));
-router.get('/:id', catchErrors(getVidburdur));
+router.get('/events', catchErrors(index));
+router.get('/events/:id', catchErrors(getVidburdur));
 //router.patch('/:id', getVidburdur);
 //router.delete(d)
 //router.post('/', catchErrors(userPostNewEvent));

@@ -98,7 +98,7 @@ function notFoundHandler(req, res, next) {
   //const validated = req.isAuthenticated();
   //const { user } = req;
   const title = 'Síða fannst ekki';
-  res.status(404).jsonr({ error: title });
+  res.status(404).json({ error: title });
 }
 
 // eslint-disable-next-line no-unused-vars
