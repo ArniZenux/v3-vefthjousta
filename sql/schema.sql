@@ -80,6 +80,14 @@ VALUES ('Andri Mars',
 
 INSERT INTO skraning 
 (nameskra, comment, eventid, userid ) 
+VALUES ('Anna Jona', 
+        'I will come and is so excited.', 
+        1,
+        1
+      );
+
+INSERT INTO skraning 
+(nameskra, comment, eventid, userid ) 
 VALUES ('Arnar Jonas', 
         'I love handball', 
         2,

@@ -10,18 +10,19 @@ const insertFile = './sql/insert.sql';
  */
 async function makeAll() {
   
-  const dropData = await promises.readFile(dropfile);
+  /*const dropData = await promises.readFile(dropfile);
   await query(dropData.toString('utf-8'));
   console.info('Table dropped');
-  
+  */
+
   const schemadata = await promises.readFile(schemaFile);
   await query(schemadata.toString('utf-8'));
   console.info('Schema created');
   
-  const insertdata = await promises.readFile(insertFile); 
+  /*const insertdata = await promises.readFile(insertFile); 
   await query(insertdata.toString('utf-8'));
   console.info('Inserted file');
-  
+  */
   await end();
   
   console.info('All files are inserted');

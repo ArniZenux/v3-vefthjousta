@@ -43,14 +43,14 @@ async function getVidburdur(req, res){
   const user = { req };
 
   const sql = `
-    SELECT * FROM 
+    SELECT namevidburdur, description FROM 
       vidburdur 
     WHERE 
       vidburdur.id = $1;
     `;
 
   const sqlUser = `
-    SELECT  namevidburdur, description, nameskra, comment 
+    SELECT nameskra, comment 
     FROM 
       vidburdur, skraning 
     WHERE 
@@ -63,8 +63,8 @@ async function getVidburdur(req, res){
   const formData = [];
 
   try {
-    const events = await listApp(sql, [id]); 
-    const rowsUser = await listApp(sqlUser, [id]); 
+    const items = await listApp(sql, [id]); 
+    const notendur = await listApp(sqlUser, [id]); 
     
     /*res.render('vidburd', 
       { user, 
@@ -83,7 +83,13 @@ async function getVidburdur(req, res){
       validated
     });*/
     
-    return res.json(rowsUser); 
+    const output = JSON.stringify({
+      items,
+      notendur
+    });
+
+    //return res.json(rowsUser); 
+    return res.send(output); 
 
   }
   catch(e){
