@@ -9,7 +9,7 @@ import { format } from 'date-fns';
 import passport from './login.js';
 import { router as eventRouter } from './events.js';
 import { cors } from './cors.js';
-//import { router as adminRoute } from './admin.js';
+import { router as adminRoute } from './admin.js';
 //import { router as notandaRoute } from './notendur.js';
 
 dotenv.config();
@@ -20,7 +20,7 @@ export function catchErrors(fn) {
 
 const {
   PORT: port = 8080,
-  //SESSION_SECRET: sessionSecret,
+  SESSION_SECRET: sessionSecret,
   DATABASE_URL: connectionString,
 } = process.env;
 
@@ -43,15 +43,16 @@ app.use(express.static(join(path, '../public')));
 app.set('views', join(path, '../views'));
 app.set('view engine', 'ejs');
 
-/*app.use(session({
+app.use(session({
   secret: sessionSecret,
   resave: false,
   saveUninitialized: false,
   maxAge: 20 * 1000, // 20 sek
-}));*/
+}));
 
-//app.use(passport.initialize());
-//app.use(passport.session());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 /**
  * Hjálparfall til að athuga hvort reitur sé gildur eða ekki.
@@ -80,7 +81,7 @@ app.locals.formatDate = (str) => {
   return date;
 };
 
-//app.use('/admin', adminRoute);
+app.use('/admin', adminRoute);
 //app.use('/notandi', notandaRoute); 
 app.use('/', eventRouter);
 

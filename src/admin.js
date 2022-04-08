@@ -28,7 +28,7 @@ const vidburdMiddleware = [
  */
 async function index(req, res) {
 
-  const title = 'Viðburðasíðan';
+  const title = 'Welcome';
   
   const sqlVidburdur = `
      SELECT 
@@ -36,15 +36,18 @@ async function index(req, res) {
     FROM 
       vidburdur 
     `;
+  let message = '';
   
-  const rows = await listApp(sqlVidburdur);
   const validated = req.isAuthenticated();
+  const { user } = req;
+  
+  /*const rows = await listApp(sqlVidburdur);
   const errors = [];
   const formData = [];
   const { search } = req.query;
-  const { user } = req;
+  */
 
-  if(user.admin){
+  /*if(user.admin){
     return res.render('index', 
       { user, 
         formData, 
@@ -67,33 +70,37 @@ async function index(req, res) {
         search: xss(search), 
         validated
     });
-  }
+  }*/
+
+  return res.json(JSON.stringify( { message, title, user, validated } ));
 }
 
 /**     
  *  GET - innskráningusiða
  */
 function login(req, res) {
-  if (req.isAuthenticated()) {
+  const validated = req.isAuthenticated();
+
+  if (validated) {
     return res.redirect('/admin');
   }
 
-  let message = '';
-  const errors = [];
-  const validated = req.isAuthenticated();
-  const user = { req };
+  let message = 'Login sida';
+
   if (req.session.messages && req.session.messages.length > 0) {
     message = req.session.messages.join(', ');
     req.session.messages = [];
   }
 
-  return res.render('login',
+  /*return res.render('login',
      { validated, 
        user, 
        errors, 
        message, 
        title: 'Innskráning'
      });
+  */
+  return res.json(JSON.stringify({ message, title: 'Innskráning', validated }));
 }
 
 /**
@@ -192,6 +199,7 @@ router.post(
   },
 );
 
+/*
 router.post('/:slug', 
   ensureLoggedIn, 
   vidburdMiddleware, 
@@ -210,6 +218,7 @@ router.post('/delete/:id',
   ensureLoggedIn, 
   catchErrors(deleteRoute)
 );
+*/
 
 router.get('/logout', (req, res) => {
   // logout hendir session cookie og session

@@ -6,6 +6,12 @@ import { catchErrors } from './utils.js';
 
 export const router = express.Router();
 
+async function home(req, res){
+  const title = 'Vefthjonusta - vidburdur - Footer ehf';
+
+  return res.json(title);
+}
+
 async function index(req, res) {
   //const validated = req.isAuthenticated();
   const title = 'Viðburðasíðan';
@@ -127,6 +133,7 @@ async function userPostNewEvent(req, res){
   return res.render('error', {validated,  title: 'Gat ekki skráð' });
 }
 
+router.get('/', catchErrors(home));
 router.get('/events', catchErrors(index));
 router.get('/events/:id', catchErrors(getVidburdur));
 //router.patch('/:id', getVidburdur);
