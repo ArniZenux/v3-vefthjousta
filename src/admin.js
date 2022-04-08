@@ -3,7 +3,7 @@ import xss from 'xss';
 import { body } from 'express-validator';
 import { listApp, insertApp, updateApp } from './db.js';
 import passport, { ensureLoggedIn } from './login.js';
-import { vidburdCheck, updateCheck } from './check.js';
+import { adgangCheck } from './check.js';
 import { catchErrors } from './utils.js';
 
 export const router = express.Router();
@@ -30,17 +30,14 @@ async function index(req, res) {
 
   const title = 'Welcome';
   
-  const sqlVidburdur = `
-     SELECT 
-      *
-    FROM 
-      vidburdur 
-    `;
-  let message = '';
+  let message = 'Admin-notandi';
   
   const validated = req.isAuthenticated();
   const { user } = req;
-  
+  const { admin } = true; 
+
+  const output = JSON.stringify({ title, admin, validated });
+
   /*const rows = await listApp(sqlVidburdur);
   const errors = [];
   const formData = [];
@@ -72,7 +69,7 @@ async function index(req, res) {
     });
   }*/
 
-  return res.json(JSON.stringify( { message, title, user, validated } ));
+  return res.send(output);
 }
 
 /**     
@@ -80,12 +77,13 @@ async function index(req, res) {
  */
 function login(req, res) {
   const validated = req.isAuthenticated();
+  const title = 'Innskraning';
 
   if (validated) {
-    return res.redirect('/admin');
+    return res.redirect('/');
   }
-
-  let message = 'Login sida';
+  
+  console.log("admin: " + validated); 
 
   if (req.session.messages && req.session.messages.length > 0) {
     message = req.session.messages.join(', ');
@@ -100,7 +98,10 @@ function login(req, res) {
        title: 'Innskráning'
      });
   */
-  return res.json(JSON.stringify({ message, title: 'Innskráning', validated }));
+  
+  const output = JSON.stringify({ title, validated });
+  
+  return res.send(output);
 }
 
 /**
@@ -186,6 +187,7 @@ router.get('/login', login);
 
 router.post(
   '/login',
+  catchErrors(adgangCheck),
 
   // Þetta notar strat að ofan til að skrá notanda inn
   passport.authenticate('local', {
