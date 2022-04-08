@@ -183,7 +183,7 @@ async function adminSlugPost(req, res){
 }
 
 router.get('/', ensureLoggedIn, catchErrors(index));
-router.get('/login', login);
+router.get('/login', catchErrors(login));
 
 router.post(
   '/login',
@@ -197,6 +197,7 @@ router.post(
 
   // Ef við komumst hingað var notandi skráður inn, senda á /admin
   (req, res) => {
+    console.log("bingo");
     res.redirect('/admin');
   },
 );
