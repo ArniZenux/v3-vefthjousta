@@ -10,7 +10,7 @@ import passport from './login.js';
 import { router as eventRouter } from './events.js';
 import { cors } from './cors.js';
 import { router as adminRoute } from './admin.js';
-//import { router as notandaRoute } from './notendur.js';
+import { router as notandaRoute } from './notendur.js';
 
 dotenv.config();
 
@@ -81,7 +81,7 @@ app.locals.formatDate = (str) => {
 };
 
 app.use('/admin', adminRoute);
-//app.use('/notandi', notandaRoute); 
+app.use('/notandi', notandaRoute); 
 app.use('/', eventRouter);
 
 /*app.get("/", (req, res) => {

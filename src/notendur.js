@@ -43,13 +43,16 @@ async function listNotenda(req, res){
   const validated = req.isAuthenticated();
   const rows = await listApp(sql);
   const { user } = req;
-  return res.render('notendur', 
+
+  /*return res.render('notendur', 
     { events: rows, 
       title, 
       user, 
       validated, 
       BirtaOne : false 
-    });
+    });*/
+  const output = JSON.stringify({rows,title,user, validated});
+  return res.send(output); 
 }
 
 async function einnNotandi(req, res){
@@ -68,17 +71,19 @@ async function einnNotandi(req, res){
   const validated = req.isAuthenticated();
   const { user } = req;
   const rows = await listApp(sql, id);
-  return res.render('notendur', 
+  /*return res.render('notendur', 
     { events: rows, 
       title, 
       user, 
       validated, 
       BirtaOne : true 
-    });
+    });*/
+  return res.send(JSON.stringify({rows, title, user, validated, BirtaOne:true}));
 }
 
 async function myInfo(req, res){
-  res.send('Upplýsingar um sjálf notanda');
+  const title = 'me me';
+  return res.json(title);
 }
 
 async function nySkra(req, res) {
@@ -108,5 +113,5 @@ async function nySkra(req, res) {
 
 router.get('/', listNotenda);
 router.get('/:id', einnNotandi);
-router.get('/me', myInfo);
+//router.get('/me', myInfo);
 router.post('/register', catchErrors(nySkra));
