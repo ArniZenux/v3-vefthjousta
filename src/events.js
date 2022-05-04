@@ -136,6 +136,7 @@ async function userPostNewEvent(req, res){
 router.get('/', catchErrors(home));
 router.get('/events', catchErrors(index));
 router.get('/events/:id', catchErrors(getVidburdur));
+
 //router.patch('/:id', getVidburdur);
 //router.delete(d)
 //router.post('/', catchErrors(userPostNewEvent));

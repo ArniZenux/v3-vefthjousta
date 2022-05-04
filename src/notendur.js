@@ -113,5 +113,7 @@ async function nySkra(req, res) {
 
 router.get('/', listNotenda);
 router.get('/:id', einnNotandi);
-//router.get('/me', myInfo);
+router.get('/me', myInfo);
+
+router.post('/login', catchErrors(nySkra));
 router.post('/register', catchErrors(nySkra));

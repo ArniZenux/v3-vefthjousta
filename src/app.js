@@ -5,12 +5,13 @@ import express from 'express';
 import session from 'express-session';
 import dotenv from 'dotenv';
 import { format } from 'date-fns';
-
 import passport from './login.js';
-import { router as eventRouter } from './events.js';
 import { cors } from './cors.js';
-import { router as adminRoute } from './admin.js';
+
+/*import { router as adminRoute } from './admin.js';
+import { router as eventRouter } from './events.js';
 import { router as notandaRoute } from './notendur.js';
+*/
 
 dotenv.config();
 
@@ -79,19 +80,19 @@ app.locals.formatDate = (str) => {
 
   return date;
 };
-
+/*
 app.use('/admin', adminRoute);
 app.use('/notandi', notandaRoute); 
 app.use('/', eventRouter);
+*/
 
-/*app.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.json( { message: "Hello Vidbudur" });
 });
 
 app.get("/api", (req, res) => {
   res.json( { message: "Hello Api" });
 });
-*/
 
 // eslint-disable-next-line no-unused-vars
 function notFoundHandler(req, res, next) {
