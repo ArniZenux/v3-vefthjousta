@@ -2,9 +2,9 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 
 import { body } from 'express-validator';
-import { listApp, insertApp } from './db.js';
-import passport, { ensureLoggedIn } from './login.js';
-import { catchErrors } from './utils.js';
+import { listApp, insertApp } from '../lib/db.js';
+import passport, { ensureLoggedIn } from '../lib/login.js';
+import { catchErrors } from '../lib/utils.js';
 
 export const router = express.Router();
 

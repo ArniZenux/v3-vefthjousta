@@ -1,16 +1,10 @@
 import express from 'express';
 //import { ensureLoggedIn } from './login.js';
 
-import { listApp, insertApp } from './db.js';
-import { catchErrors } from './utils.js';
+import { listApp, insertApp } from '../lib/db.js';
+import { catchErrors } from '../lib/utils.js';
 
 export const router = express.Router();
-
-async function home(req, res){
-  const title = 'Vefthjonusta - vidburdur - Footer ehf';
-
-  return res.json(title);
-}
 
 async function index(req, res) {
   //const validated = req.isAuthenticated();
@@ -44,9 +38,9 @@ async function index(req, res) {
 
 async function getVidburdur(req, res){
   const { id } = req.params;
-  const title = 'Viðburðasíðan';
+  //const title = 'Viðburðasíðan';
   //const validated = req.isAuthenticated();
-  const user = { req };
+  //const user = { req };
 
   const sql = `
     SELECT namevidburdur, description FROM 
@@ -72,29 +66,11 @@ async function getVidburdur(req, res){
     const items = await listApp(sql, [id]); 
     const notendur = await listApp(sqlUser, [id]); 
     
-    /*res.render('vidburd', 
-      { user, 
-        formData, 
-        errors, 
-        title, 
-        events, 
-        rowsuser, 
-        admin : true, 
-        validated 
-    });
-    
-    const output = JSON.stringify({
-      title,
-      events,
-      validated
-    });*/
-    
     const output = JSON.stringify({
       items,
       notendur
     });
 
-    //return res.json(rowsUser); 
     return res.send(output); 
 
   }
@@ -108,8 +84,8 @@ async function getVidburdur(req, res){
  */
 async function userPostNewEvent(req, res){
   let success = true;   
-  const validated = req.isAuthenticated();
-  const { user } = req; 
+  //const validated = req.isAuthenticated();
+  //const { user } = req; 
   const nameSlug = req.body.namevidburdur.split(' ').join('-').toLowerCase();
   const info = [req.body.namevidburdur, nameSlug, req.body.comment, user.id];
 
@@ -133,11 +109,11 @@ async function userPostNewEvent(req, res){
   return res.render('error', {validated,  title: 'Gat ekki skráð' });
 }
 
-router.get('/', catchErrors(home));
-router.get('/events', catchErrors(index));
-router.get('/events/:id', catchErrors(getVidburdur));
+router.get('/', catchErrors(index));
+router.get('/:id', catchErrors(getVidburdur));
+
+router.post('/', catchErrors(userPostNewEvent));
 
 //router.patch('/:id', getVidburdur);
 //router.delete(d)
-//router.post('/', catchErrors(userPostNewEvent));
 //router.post('/:id/register', catchErrors(userPostEvent));

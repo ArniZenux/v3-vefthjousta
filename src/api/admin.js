@@ -1,12 +1,14 @@
 import express from 'express';
 import xss from 'xss';
 import { body } from 'express-validator';
-import { listApp, insertApp, updateApp } from './db.js';
-import passport, { ensureLoggedIn } from './login.js';
-import { adgangCheck } from './check.js';
-import { catchErrors } from './utils.js';
+import { listApp, insertApp, updateApp } from '../lib/db.js';
+import passport, { ensureLoggedIn } from '../lib/login.js';
+import { adgangCheck } from '../lib/check.js';
+import { catchErrors } from '../lib/utils.js';
 
 export const router = express.Router();
+
+const apiUrl = process.env.REACT_APP_API_URL;
 
 const vidburdMiddleware = [
   body('namevidburdur')
